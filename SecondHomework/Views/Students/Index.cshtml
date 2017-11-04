@@ -1,0 +1,24 @@
+﻿@model IOrderedEnumerable<Student>
+
+<main>
+    <h1>Студенты курса</h1>
+    <div class="table">
+        <div class="headRow">
+            <div class="headCell">Id</div>
+            <div class="headCell">Имя</div>
+            <div class="headCell">Фамилия</div>
+            <div class="headCell">Email</div>
+        </div>
+    
+        @foreach (var student in Model)
+        {
+            <div class="tableRow">
+                <div class="cell">@student.Id</div>  
+                <div class="cell">@student.Name</div>  
+                <div class="cell">@student.Surname</div>  
+                <div class="cell">@student.Email</div>  
+            </div>
+        }
+    </div>
+
+</main>

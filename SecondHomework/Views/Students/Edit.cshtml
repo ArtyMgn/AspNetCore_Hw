@@ -1,0 +1,27 @@
+﻿@using System.Net
+@model Student
+
+<main>
+    @using (Html.BeginForm("Update", "Students", Model, FormMethod.Post))
+    {
+        <div>
+            <div>@Html.DisplayNameFor(m => m.Name)</div>
+            <div>@Html.EditorFor(m => m.Name)</div>
+            <div>@Html.ValidationMessageFor(m => m.Name)</div>
+        </div>
+    
+        <div>
+            <div>@Html.DisplayNameFor(m => m.Surname)</div>
+            <div>@Html.EditorFor(m => m.Surname)</div>
+            <div>@Html.ValidationMessageFor(m => m.Surname)</div>
+        </div>
+    
+        <div>
+            <div>@Html.DisplayNameFor(m => m.Email)</div>
+            <div>@Html.EditorFor(m => m.Email)</div>
+            <div>@Html.ValidationMessageFor(m => m.Email)</div>
+        </div>
+        <br/>
+        <button class="btn btn-primary" type="submit">Сохранить</button>
+    }
+</main>

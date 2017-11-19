@@ -15,10 +15,16 @@ namespace SecondHomework.Controllers
             return View(studentsOrderedById);
         }
 
+        [HttpPost]
         public IActionResult Add(Student newStudent)
         {
             var students = LoadStudentsFromFile("students.txt");
-
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
             if (students.ContainsKey(newStudent.Id))
             {
                 return BadRequest($"student with id = {newStudent.Id} already exist");
@@ -30,6 +36,7 @@ namespace SecondHomework.Controllers
             return Content($"Added {serializedStudent}, Students count: {students.Values.Count}");
         }
 
+        [HttpDelete]
         public IActionResult Delete(int studentId)
         {
             var students = LoadStudentsFromFile("students.txt");
@@ -37,21 +44,32 @@ namespace SecondHomework.Controllers
             SaveStudentsToFile(students);
             return Content($"Deleted student with id {studentId}");
         }
-
+        
+        public IActionResult Edit(Student student)
+        {
+            return View(student);
+        }
+        
+        [HttpPost]
         public IActionResult Update(Student student)
         {
             var students = LoadStudentsFromFile("students.txt");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
             if (!students.ContainsKey(student.Id))
             {
                 return BadRequest($"Can't update: student with id = {student.Id} doesn't exist");
             }
 
-            var oldValue = JsonConvert.SerializeObject(students[student.Id]);
             students[student.Id] = student;
             SaveStudentsToFile(students);
-            return Content($"updated student: {oldValue} -> {JsonConvert.SerializeObject(student)}");
+            return RedirectToAction("Read", new {studentId = student.Id});
         }
 
+        [HttpGet]
         public IActionResult Read(int studentId)
         {
             var students = LoadStudentsFromFile("students.txt");
@@ -60,8 +78,8 @@ namespace SecondHomework.Controllers
             {
                 return BadRequest($"Can't read: student with id = {studentId} doesn't exist");
             }
-
-            return Ok(students[studentId]);
+                
+            return View(students[studentId]);
         }
 
         [NonAction]

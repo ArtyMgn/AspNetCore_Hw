@@ -6,11 +6,12 @@ namespace SecondHomework.Models
     {
         [Display(Name = "Идентификатор")]
         [Required]
+        [Key]
         public int Id { get; set; }
 
         [Display(Name = "Имя")]
         [Required]
-        [StringLength(100)]
+        [StringLength(200)]
         public string Name { get; set; }
         
         [Display(Name = "Фамилия")]

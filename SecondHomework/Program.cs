@@ -17,8 +17,12 @@ namespace SecondHomework
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        private static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile("developerInfoOptions.json", true, true);
+                })
                 .UseStartup<Startup>()
                 .UseKestrel()
                 .Build();

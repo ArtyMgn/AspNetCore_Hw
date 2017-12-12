@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SecondHomework.Options;
 using SecondHomework.Services;
 
 namespace SecondHomework
@@ -21,6 +22,7 @@ namespace SecondHomework
             var connectionString = Configuration.GetConnectionString("StudentsDatabase");
             services.AddDbContext<StudentContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IStudentsStorageService, SqlStudentsStorageService>();
+            services.Configure<DeveloperInfoOptions>(Configuration.GetSection("DeveloperInfoOptions"));
             services.AddMvc();
         }
 
